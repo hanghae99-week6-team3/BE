@@ -3,10 +3,9 @@ const { Product, Like } = require("../models");
 class LikeRepository {
   findLikeCount = async (productId) => {
     const product = await Product.findByPk(productId);
-
     return product.likeCount;
   };
-
+  
   create = async (productId, userId) => {
     await Like.create({ productId, userId });
   };

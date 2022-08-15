@@ -5,9 +5,12 @@ const router = express.Router();
 const ProductController = require("../controllers/product.controllers");
 const productController = new ProductController();
 
-// router.get("/", productController.getProducts);
-// router.get("/", productController.getCategory);
-// router.get("/:productId", productController.getProduct);
+//product 조회
+router.get("/product?category=", productController.getCategriedProducts);
+router.get("/:productId", productController.getTargetproduct);
+router.get("/", productController.getAllProducts);
+
+//product 생성,수정,삭제
 router.post("/", productController.createProduct);
 router.put("/:productId", productController.updateProduct);
 router.delete("/:productId", productController.deleteProduct);
