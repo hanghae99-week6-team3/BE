@@ -5,7 +5,7 @@ const getAllComment = async (req, res) => {
   const { productId } = req.params;
   const commentDatas = await commentDataTable.findAll({
     where: { productId: productId },
-    order: [["createdAt", "DESC"]],
+    // order: [["createdAt", "DESC"]],
   });
   if (!commentDatas.length) {
     return res.status(400).json({

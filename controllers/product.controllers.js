@@ -1,7 +1,34 @@
+const { TableHints } = require("sequelize/types");
 const ProductService = require("../services/product.services");
 
 class ProductController {
   productService = new ProductService();
+
+  // prodcut 전체 조회 api
+  getAllProducts = async (req, res) => {
+    const { userId } = res.locals.user;
+    const ProductsData = await this.productService.findAllproducts(userId);
+    res.json({ data: [ProductsData] });
+  };
+
+  //카테고리별 prodcut 조회 api
+  getCategriedProducts = async (req, res) => {
+    const { userId } = res.locals.user;
+    const category = req.query;
+    const CategriedProductsData =
+      await this.productService.findCategoryrproducts(category, userId);
+    res.json({ data: [CategriedProductsData] });
+  };
+
+  //상세 prodcut 조회 api
+  getTargetproduct = async (req, res) => {
+    const { productId } = req.params;
+    const { userId } = res.locals.user;
+    const detailProductData = await this.productService.findTargetproduct(
+      productId, userId
+    );
+    res.json({ data: detailProductData });
+  };
 
   createProduct = async (req, res) => {
     const { title, category, location, price, content } = req.body;
