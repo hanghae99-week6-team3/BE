@@ -29,6 +29,8 @@ class ProductService {
           category: product.category,
           location: product.location,
           price: product.price,
+          img: product.img,
+          content: product.content,
           commentCount:commentCount,
           createdAt: product.createdAt,
         },
@@ -60,6 +62,8 @@ class ProductService {
           category: product.category,
           location: product.location,
           price: product.price,
+          img: product.img,
+          content: product.content,
           commentCount:commentCount,
           createdAt: product.createdAt,
         },
@@ -92,6 +96,8 @@ class ProductService {
           category: product.category,
           location: product.location,
           price: product.price,
+          img: product.img,
+          content: product.content,
           content: product.content,
           createdAt: product.createdAt,
           nickname: product.nickname,
@@ -114,7 +120,8 @@ class ProductService {
     category,
     location,
     price,
-    content
+    content,
+    img
   ) => {
     const createProductData = await this.productRepository.createProduct(
       nickname,
@@ -122,7 +129,8 @@ class ProductService {
       category,
       location,
       price,
-      content
+      content,
+      img
     );
 
     return {
@@ -132,6 +140,7 @@ class ProductService {
       location: createProductData.location,
       price: createProductData.price,
       content: createProductData.content,
+      img: createProductData.img
     };
   };
 
@@ -141,7 +150,8 @@ class ProductService {
     category,
     location,
     price,
-    content
+    content,
+    img
   ) => {
     await this.productRepository.updateProduct(
       productId,
@@ -149,7 +159,8 @@ class ProductService {
       category,
       location,
       price,
-      content
+      content,
+      img
     );
 
     const updateProduct = await this.productRepository.findProductOne(
@@ -163,6 +174,7 @@ class ProductService {
       location: updateProduct.location,
       price: updateProduct.price,
       content: updateProduct.content,
+      img: updateProduct.img,
       createdAt: updateProduct.createdAt,
     };
   };
@@ -180,6 +192,7 @@ class ProductService {
       category: findProduct.category,
       location: findProduct.location,
       price: findProduct.price,
+      img: findProduct.img,
       content: findProduct.content,
       createdAt: findProduct.createdAt,
     };

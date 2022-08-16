@@ -2,24 +2,20 @@ const { Product, Like } = require("../models");
 
 class LikeRepository {
   findLikeCount = async (productId) => {
-    const product = await Product.findByPk(productId);
+    const product = await Like.findByPk(productId);
     return product.likeCount;
   };
-  
-  create = async (productId, userId) => {
-    await Like.create({ productId, userId });
+
+  findUser = async (productId) => {
+    const like = await Like.findByPk(productId);
+    return like.userId;
   };
 
-  destroy = async (productId, userId) => {
-    await Like.destroy({ where: { productId, userId } });
+  update = async (productId, addUser) => {
+    await Like.update({ addUser }, { where: { productId } });
   };
 
-  decrement = async (productId) => {
-    const like = await Product.findOne({ where: { productId } });
-    await like.decrement("likeCount");
-  };
-
-  increment = async (productId) => {
+  countLike = async (productId) => {
     const like = await Product.findOne({ where: { productId } });
     await like.increment("likeCount");
   };

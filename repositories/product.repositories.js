@@ -45,7 +45,8 @@ class ProductRepository {
     category,
     location,
     price,
-    content
+    content,
+    img
   ) => {
     const createProductData = await Product.create({
       nickname,
@@ -54,6 +55,7 @@ class ProductRepository {
       location,
       price,
       content,
+      img,
     });
 
     return createProductData;
@@ -65,10 +67,11 @@ class ProductRepository {
     category,
     location,
     price,
-    content
+    content,
+    img
   ) => {
     const updateProductData = await Product.update(
-      { title, category, location, price, content },
+      { title, category, location, price, content, img },
       { where: { productId } }
     );
 
@@ -81,4 +84,4 @@ class ProductRepository {
   };
 }
 
-module.exports =  ProductRepository ;
+module.exports = ProductRepository;
