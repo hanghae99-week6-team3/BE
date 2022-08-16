@@ -4,13 +4,13 @@ class LikeService {
   likeRepository = new LikeRepository();
 
   isLiked = async (productId, userId, like) => {
-    if (like !== true) {
-      await this.likeRepository.create(productId, userId);
-      await this.likeRepository.increment(productId);
-    } else {
-      await this.likeRepository.destroy(productId, userId);
-      await this.likeRepository.decrement(productId);
-    }
+    const user = this.likeRepository.findUser(productId);
+    like
+      ? (addUser = user.push(userId))
+      : (addUser = user.filter((u) => u.userId !== userId));
+
+    await this.likeRepository.update(productId, addUser);
+    await this.likeRepository.countLike(productId);
 
     const likeCount = await this.likeRepository.findLikeCount(productId);
 

@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      userId: {
+        type: Sequelize.JSON,
+      },
       likeCount: DataTypes.INTEGER,
     },
     {

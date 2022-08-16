@@ -11,6 +11,9 @@ module.exports = {
       likeCount: {
         type: Sequelize.INTEGER,
       },
+      userId: {
+        type: Sequelize.JSON,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

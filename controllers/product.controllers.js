@@ -1,4 +1,3 @@
-const { TableHints } = require("sequelize/types");
 const ProductService = require("../services/product.services");
 
 class ProductController {
@@ -25,7 +24,8 @@ class ProductController {
     const { productId } = req.params;
     const { userId } = res.locals.user;
     const detailProductData = await this.productService.findTargetproduct(
-      productId, userId
+      productId,
+      userId
     );
     res.json({ data: detailProductData });
   };
@@ -40,7 +40,8 @@ class ProductController {
       category,
       location,
       price,
-      content
+      content,
+      img
     );
 
     res.json({ message: "success" });
@@ -56,7 +57,8 @@ class ProductController {
       category,
       location,
       price,
-      content
+      content,
+      img
     );
 
     res.json({ message: "success" });
