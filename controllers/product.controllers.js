@@ -1,7 +1,9 @@
 const ProductService = require("../services/product.services");
+const CommnetService = require("../services/comment.services");
 
 class ProductController {
   productService = new ProductService();
+  commnetService = new CommnetService();
 
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
@@ -24,10 +26,10 @@ class ProductController {
     const { productId } = req.params;
     const { userId } = res.locals.user;
     const detailProductData = await this.productService.findTargetproduct(
-      productId,
-      userId
+      productId, userId
     );
-    res.json({ data: detailProductData });
+    const detailcommentdata = await this.commnetService.findTargetcomment(productId)
+    res.json({ data:{detailProductData, comment:[detailcommentdata] }  });
   };
 
   createProduct = async (req, res) => {
@@ -40,8 +42,7 @@ class ProductController {
       category,
       location,
       price,
-      content,
-      img
+      content
     );
 
     res.json({ message: "success" });
@@ -57,8 +58,7 @@ class ProductController {
       category,
       location,
       price,
-      content,
-      img
+      content
     );
 
     res.json({ message: "success" });

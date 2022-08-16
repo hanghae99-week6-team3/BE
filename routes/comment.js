@@ -5,7 +5,7 @@ const {
   postComment,
   updateComment,
   deletComment,
-} = require("../controllers/comment");
+} = require("../controllers/comment.controllers");
 
 router
   .route("/product/comment/:productId")

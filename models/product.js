@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "productId",
         sourceKey: "productId",
       });
+      this.hasMany(models.Comment, {
+        foreignKey: "productId",
+        sourceKey: "productId",
+      });
     }
   }
   Product.init(

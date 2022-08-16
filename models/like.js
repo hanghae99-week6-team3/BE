@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       userId: {
-        type: Sequelize.JSON,
+        type: DataTypes.JSON,
       },
       likeCount: DataTypes.INTEGER,
     },

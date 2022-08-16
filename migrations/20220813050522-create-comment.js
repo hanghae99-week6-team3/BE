@@ -17,8 +17,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       productId: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Products", // Users 모델에서
+          key: "productId", // 그 아이디 값을 참고합니다.
+        },
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
