@@ -11,8 +11,7 @@ class UsersController {
 
         await this.userService.createUser({userId, nickname, password});
         res.status(200).json({
-            success: true,
-            message: "User create success!"
+            success: true
         });
     };
 
@@ -33,9 +32,8 @@ class UsersController {
         res.cookie("token", token);
 
         res.json({
-            success: true,
-            message: "login success"
-        })
+            token: token,
+        });
     };
 
     DoubleCheck = async() => {
