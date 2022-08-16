@@ -27,7 +27,7 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn(
-      "Products", // name of Source model
+      "Likes", // name of Source model
       "productId" // key we want to remove
     );
   },

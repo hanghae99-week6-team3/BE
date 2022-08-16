@@ -1,4 +1,4 @@
-const LikeService = require("../services/like.service");
+const LikeService = require("../services/like.services");
 
 class LikeController {
   likeService = new LikeService();
