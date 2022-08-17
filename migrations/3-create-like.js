@@ -12,7 +12,13 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       userId: {
-        type: Sequelize.JSON,
+        type: Sequelize.TEXT,
+        get:function(){
+          return JSON.parse(this.getDataValue("userId"));
+        },
+        set:function(value){
+          return this.setDataValue("userId", value);
+        }
       },
       createdAt: {
         allowNull: false,
