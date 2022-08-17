@@ -41,7 +41,7 @@ class ProductController {
 
   createProduct = async (req, res) => {
     const { title, category, location, price, content, img } = req.body;
-    const token = req.cookies;
+    const token = req.cookies.token;
     console.log("!!!@@@", token);
     const { userId } = jwt.verify(token, "my-secret-key"); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
     const findUser = await User.findByPk(userId);
