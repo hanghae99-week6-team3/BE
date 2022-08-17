@@ -7,7 +7,7 @@ const ProductController = require("../controllers/product.controllers");
 const productController = new ProductController();
 
 //product 조회
-router.get("/product?category=", productController.getCategriedProducts);
+router.get("/search", productController.getCategriedProducts);
 router.get("/:productId", productController.getTargetproduct);
 router.get("/", productController.getAllProducts);
 
@@ -17,3 +17,4 @@ router.put("/:productId", authMiddleware, productController.updateProduct);
 router.delete("/:productId", authMiddleware, productController.deleteProduct);
 
 module.exports = router;
+

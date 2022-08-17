@@ -1,14 +1,14 @@
-const commentDataTable = require("../models/comment");
+const { Comment } = require("../models");
 
 class CommentRepository {
-  // //productId기준 댓글 갯수
-  // commentCount = async (productId) => {
-  //   const product = await commentDataTable.findAll({
-  //     where: { productId: productId },
-  //   });
-  //   const commnetCount = product.length;
-  //   return commnetCount;
-  // };
+  //productId기준 댓글 갯수
+  findAllcomments = async (productId) => {
+    const product = await Comment.findAll({
+      where: { productId: productId },
+      
+    });
+    return product;
+  };
   // //productId기준 댓글 데이터
   // comments = async (productId) => {
   //   const CommentData = await commentDataTable.findAll({
