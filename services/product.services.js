@@ -11,8 +11,7 @@ class ProductService {
   findAllproducts = async (userId) => {
     let likeChack;
     const allProducts = await this.productRepository.findAllproducts();
-    const productIdata = await this.likeRepository.findProductId();
-    console.log(Object.values(productIdata));
+    const productIdata = JSON.parse(await this.likeRepository.findProductId());
 
     for(let i = 0; i < productIdata.length; i++){
       let userIdCopy = productIdata[i].userId.find(userId);;

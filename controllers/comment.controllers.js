@@ -1,9 +1,9 @@
-const commentDataTable = require("../models/comment");
+const { Comment } = require("../models");
 
 //댓글 조회 API
 const getAllComment = async (req, res) => {
   const { productId } = req.params;
-  const commentDatas = await commentDataTable.findAll({
+  const commentDatas = await Comment.findAll({
     where: { productId: productId },
     // order: [["createdAt", "DESC"]],
   });
@@ -26,7 +26,7 @@ const postComment = async (req, res) => {
       errorMessage: "댓글내용이 없습니다.",
     });
   }
-  await commentDataTable.create({
+  await Comment.create({
     content,
     productId,
     nickname,
@@ -45,7 +45,7 @@ const updateComment = async (req, res) => {
       errorMessage: "댓글내용이 없습니다.",
     });
   }
-  await commentDataTable.update(
+  await Comment.update(
     { content: content },
     { where: { commentId: commentId } }
   );
@@ -57,7 +57,7 @@ const updateComment = async (req, res) => {
 const deletComment = async (req, res) => {
   const { commnetId } = req.params;
 
-  await commentDataTable.destroy({
+  await Comment.destroy({
     where: { commnetId: commnetId },
   });
   res.status(200).json({ message: "success" });

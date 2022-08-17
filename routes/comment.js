@@ -1,5 +1,5 @@
 const express = require("express");
-const authMiddleware = require("../middlewares/auth-middleware");
+const authMiddleware = require("../middlewares/auth_middlewares");
 const router = express.Router();
 const {
   getAllComment,
