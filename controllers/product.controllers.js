@@ -13,14 +13,10 @@ class ProductController {
 
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
-<<<<<<< HEAD
-    // const { userId } = res.locals.user;
-=======
     if(!req.cookies.token){
       return res.status(400).json({message: "토큰 없음"});
     }
     const { userId } = jwt.verify(req.cookies.token, process.env.MYSQL_KEY);
->>>>>>> 작업중
     const ProductsData = await this.productService.findAllproducts(userId);
     res.json({ data: [ProductsData] });
   };
