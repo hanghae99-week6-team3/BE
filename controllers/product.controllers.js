@@ -12,7 +12,7 @@ class ProductController {
   // prodcut 전체 조회 api ok
   getAllProducts = async (req, res) => {
     const ProductsData = await this.productService.findAllproducts_none();
-    res.json({ data: [ProductsData] });
+    res.json({ data: ProductsData });
   };
 
   //카테고리별 prodcut 조회 api ok
@@ -42,7 +42,7 @@ class ProductController {
     const { title, category, location, price, content, img } = req.body;
     const { nickname } = res.locals.user;
 
-    await this.productService.createProduct(
+    const prodcut = await this.productService.createProduct(
       nickname,
       title,
       category,
@@ -52,7 +52,7 @@ class ProductController {
       img
     );
 
-    res.json({ message: "success" });
+    res.json(prodcut);
   };
 
   //product 게시글 수정 ok

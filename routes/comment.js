@@ -13,6 +13,9 @@ router
   .post(authMiddleware, postComment)
   .get(getAllComment);
 
-router.route("/comment/:commentId").put(authMiddleware, updateComment).delete(authMiddleware, deletComment);
+router
+  .route("/comment/:commentId")
+  .put(authMiddleware, updateComment)
+  .delete(authMiddleware, deletComment);
 
 module.exports = router;

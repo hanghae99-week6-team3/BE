@@ -135,41 +135,33 @@ class ProductService {
     //     },
     // };
   };
-}
 
-//비회원 상세 prodcut api
-findTargetproduct_none = async (productId) => {
-  // let likeChack = false;
-  const targetProducts = await this.productRepository.targetProduct(productId);
-  return targetProducts.map((product) => {
-    return {
-      product: {
-        productId: product.productId,
-        title: product.title,
-        category: product.category,
-        location: product.location,
-        price: product.price,
-        img: product.img,
-        content: product.content,
-        content: product.content,
-        createdAt: product.createdAt,
-        nickname: product.nickname,
-      },
-    };
-  });
-};
+  //비회원 상세 prodcut api
+  findTargetproduct_none = async (productId) => {
+    // let likeChack = false;
+    const targetProducts = await this.productRepository.targetProduct(
+      productId
+    );
+    return targetProducts.map((product) => {
+      return {
+        product: {
+          productId: product.productId,
+          title: product.title,
+          category: product.category,
+          location: product.location,
+          price: product.price,
+          img: product.img,
+          content: product.content,
+          content: product.content,
+          createdAt: product.createdAt,
+          nickname: product.nickname,
+        },
+      };
+    });
+  };
 
-//상품 설명 생성
-createProduct = async (
-  nickname,
-  title,
-  category,
-  location,
-  price,
-  content,
-  img
-) => {
-  const createProductData = await this.productRepository.createProduct(
+  //상품 설명 생성
+  createProduct = async (
     nickname,
     title,
     category,
@@ -177,29 +169,32 @@ createProduct = async (
     price,
     content,
     img
-  );
+  ) => {
+    const createProductData = await this.productRepository.createProduct(
+      nickname,
+      title,
+      category,
+      location,
+      price,
+      content,
+      img
+    );
 
-  return {
-    nickname: createProductData.nickname,
-    title: createProductData.title,
-    category: createProductData.category,
-    location: createProductData.location,
-    price: createProductData.price,
-    content: createProductData.content,
-    img: createProductData.img,
+    return {
+      productId: createProductData.productId,
+      nickname: createProductData.nickname,
+      title: createProductData.title,
+      category: createProductData.category,
+      location: createProductData.location,
+      price: createProductData.price,
+      content: createProductData.content,
+      img: createProductData.img,
+      createdAt: createProductData.createdAt,
+      updatedAt: createProductData.updatedAt,
+    };
   };
-};
-//상품 설명 수정
-updateProduct = async (
-  productId,
-  title,
-  category,
-  location,
-  price,
-  content,
-  img
-) => {
-  await this.productRepository.updateProduct(
+  //상품 설명 수정
+  updateProduct = async (
     productId,
     title,
     category,
@@ -207,39 +202,51 @@ updateProduct = async (
     price,
     content,
     img
-  );
+  ) => {
+    await this.productRepository.updateProduct(
+      productId,
+      title,
+      category,
+      location,
+      price,
+      content,
+      img
+    );
 
-  const updateProduct = await this.productRepository.findProductOne(productId);
+    const updateProduct = await this.productRepository.findProductOne(
+      productId
+    );
 
-  return {
-    productId: updateProduct.productId,
-    title: updateProduct.title,
-    category: updateProduct.category,
-    location: updateProduct.location,
-    price: updateProduct.price,
-    content: updateProduct.content,
-    img: updateProduct.img,
-    createdAt: updateProduct.createdAt,
+    return {
+      productId: updateProduct.productId,
+      title: updateProduct.title,
+      category: updateProduct.category,
+      location: updateProduct.location,
+      price: updateProduct.price,
+      content: updateProduct.content,
+      img: updateProduct.img,
+      createdAt: updateProduct.createdAt,
+    };
   };
-};
-//상품 설명 삭제
-deleteProduct = async (productId) => {
-  const findProduct = await this.productRepository.findProductOne(productId);
+  //상품 설명 삭제
+  deleteProduct = async (productId) => {
+    const findProduct = await this.productRepository.findProductOne(productId);
 
-  if (!findProduct) throw new Error("댓글이 존재하지 않습니다.");
+    if (!findProduct) throw new Error("댓글이 존재하지 않습니다.");
 
-  await this.productRepository.deleteProduct(productId);
+    await this.productRepository.deleteProduct(productId);
 
-  return {
-    productId: findProduct.productId,
-    title: findProduct.title,
-    category: findProduct.category,
-    location: findProduct.location,
-    price: findProduct.price,
-    img: findProduct.img,
-    content: findProduct.content,
-    createdAt: findProduct.createdAt,
+    return {
+      productId: findProduct.productId,
+      title: findProduct.title,
+      category: findProduct.category,
+      location: findProduct.location,
+      price: findProduct.price,
+      img: findProduct.img,
+      content: findProduct.content,
+      createdAt: findProduct.createdAt,
+    };
   };
-};
+}
 
 module.exports = ProductService;
