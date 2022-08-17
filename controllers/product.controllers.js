@@ -1,5 +1,7 @@
 const ProductService = require("../services/product.services");
 const CommnetService = require("../services/comment.services");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 class ProductController {
   productService = new ProductService();
@@ -7,7 +9,10 @@ class ProductController {
 
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
-    const { userId } = res.locals.user;
+    if(!req.cookies.token){
+      return res.status(400).json({message: "토큰 없음"});
+    }
+    const { userId } = jwt.verify(req.cookies.token, process.env.MYSQL_KEY);
     const ProductsData = await this.productService.findAllproducts(userId);
     res.json({ data: [ProductsData] });
   };

@@ -21,12 +21,8 @@ class LikeRepository {
   };
 
   findProductId = async (userId) => {
-    const productId = await Like.findAll({ 
-      where: sequelize.where(sequelize.fn('JSON_CONTAINS', sequelize.col('userId'), 
-      sequelize.literal(userId), sequelize.literal('$')), 2)
-    });
-    
-    await productId
+    const productId = await Like.findAll({});
+    await productId;
   }; 
 }
 

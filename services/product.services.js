@@ -9,8 +9,19 @@ class ProductService {
 
   // prodcut 전체 조회  api
   findAllproducts = async (userId) => {
+    let likeChack;
     const allProducts = await this.productRepository.findAllproducts();
-    const productIdata = await this.likeRepository.findProductId(userId)
+    const productIdata = await this.likeRepository.findProductId();
+    console.log(Object.values(productIdata));
+
+    for(let i = 0; i < productIdata.length; i++){
+      let userIdCopy = productIdata[i].userId.find(userId);;
+      if(!userIdCopy){
+        likeChack = false;
+      }else{
+        likeChack = true;
+      }
+    };
     // const likedProduct = await this.productRepository.findlikedProducts(userId)
 
     return allProducts.map((product) => {
@@ -35,7 +46,7 @@ class ProductService {
           createdAt: product.createdAt,
         },
         like: {
-          like: productIdata.includes(product.productId),
+          like: likeChack,
           likeCount: product.Likes.likeCount,
         },
       };
@@ -47,7 +58,7 @@ class ProductService {
     const categoryProducts = await this.productRepository.findCategoryrproducts(
       category
     );
-    const productIdata = await this.likeRepository.findProductId(userId)
+    const productIdata = await this.likeRepository.findProductId(userId);
 
     return categoryProducts.map((product) => {
       // const likeCount = await this.likeRepository.findLikeCount(product.productId);
@@ -83,7 +94,7 @@ class ProductService {
     const targetProducts = await this.productRepository.targetProduct(
       productId
     );
-    const productIdata = await this.likeRepository.findProductId(userId)
+    const productIdata = await this.likeRepository.findProductId();
 
     return targetProducts.map((product) => {
       // const likeCount = await this.likeRepository.findLikeCount(product.productId);
