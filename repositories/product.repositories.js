@@ -37,7 +37,7 @@ class ProductRepository {
   //   return CaterproductsData;
   // };
 
-  findCategoryrproducts = async () => {
+  findCategoryrproducts = async (category) => {
     const CaterproductsData = await Product.findAll({
       where: { category: category },
       include: [
@@ -52,25 +52,15 @@ class ProductRepository {
 
   // =====================================================================
 
-  //상세 product 데이터 res
-  // targetProduct = async (productId) => {
-  //   const targetProductData = await Product.findOne({
-  //     where: { productId: productId },
-  //   });
-  //   return targetProductData;
-  // };
-  
   targetProduct = async (productId) => {
     const targetProductData = await Product.findOne({
       where: { productId: productId },
-      include: [
-        {
-          model: Comment,
-          // attributes : attributes,
-        },
-      ],
+      // include: [
+      //   {
+      //     model: Comment,
+      //   },
+      // ],
     });
-
     return targetProductData;
   };
 
@@ -110,13 +100,19 @@ class ProductRepository {
       { title, category, location, price, content, img },
       { where: { productId } }
     );
-
     return updateProductData;
   };
 
   deleteProduct = async (productId) => {
     const deleteProductData = await Product.destroy({ where: { productId } });
     return deleteProductData;
+  };
+
+  findProductOne = async (productId) => {
+    const ProductData = await Product.findOne({
+      where: { productId: productId },
+    });
+    return ProductData;
   };
 }
 

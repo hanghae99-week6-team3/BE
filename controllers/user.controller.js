@@ -7,6 +7,7 @@ require("dotenv").config();
 class UsersController {
     userService = new UserService();
 
+    //회원가입 ok
     createUser = async(req,res,next) => {
         const {userId, nickname, password} = req.body;
 
@@ -15,7 +16,7 @@ class UsersController {
             success: true
         });
     };
-
+    //login ok
     Login = async(req,res,next) => {
         const {userId, password} = req.body;
         const user = await this.userService.Login(userId, password);
@@ -34,7 +35,7 @@ class UsersController {
             token,
         });
     };
-
+    //중복확인  ok
     DoubleCheck = async(req,res,next) => {
         const {key, value} = req.body;
         let user;

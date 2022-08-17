@@ -1,6 +1,6 @@
 const { Comment } = require("../models");
 
-//댓글 조회 API
+//댓글 조회 API ok
 const getAllComment = async (req, res) => {
   const { productId } = req.params;
   const commentDatas = await Comment.findAll({
@@ -16,10 +16,11 @@ const getAllComment = async (req, res) => {
   res.status(200).json({ commentDatas });
 };
 
-//댓글 작성 API
+//댓글 작성 API ok
 const postComment = async (req, res) => {
   const { content } = req.body;
   const { productId } = req.params;
+  const { nickname } = res.locals.user ;
   if (!content) {
     return res.status(400).json({
       success: false,
@@ -32,10 +33,11 @@ const postComment = async (req, res) => {
     nickname,
   });
 
+
   res.status(201).json({ message: "success" });
 };
 
-//댓글 수정 API
+//댓글 수정 API ok
 const updateComment = async (req, res) => {
   const { content } = req.body;
   const { commentId } = req.params;
@@ -53,7 +55,7 @@ const updateComment = async (req, res) => {
   res.status(201).json({ message: "success" });
 };
 
-//댓글 삭제 API
+//댓글 삭제 API ok
 const deletComment = async (req, res) => {
   const { commentId } = req.params;
 

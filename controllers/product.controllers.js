@@ -9,69 +9,35 @@ class ProductController {
   productService = new ProductService();
   commnetService = new CommnetService();
 
-  // prodcut 전체 조회 api
+  // prodcut 전체 조회 api ok
   getAllProducts = async (req, res) => {
-    const { Authorization } = req.headers;
-
-    //토큰이 없을 경우
-    if (!Authorization) {
-      const ProductsData = await this.productService.findAllproducts_none();
-      return res.json({ data: [ProductsData] });
-    }
-    let [authType, authToken] = Authorization.split("");
-    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
     const ProductsData = await this.productService.findAllproducts_none();
     res.json({ data: [ProductsData] });
   };
 
-  //카테고리별 prodcut 조회 api
+  //카테고리별 prodcut 조회 api ok
   getCategriedProducts = async (req, res) => {
-    const { Authorization } = req.headers;
-    const category = req.query;
-
-    //토큰이 없을 경우
-    if (!Authorization) {
-      const category = req.query;
-      const CategriedProductsData =
-        await this.productService.findCategoryrproducts_none(category);
-      return res.json({ data: [CategriedProductsData] });
-    }
-
-    let [authType, authToken] = Authorization.split(" ");
-    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
+    // const { Authorization } = req.headers;
+    const { category } = req.query;
     const CategriedProductsData =
       await this.productService.findCategoryrproducts_none(category);
+
     res.json({ data: [CategriedProductsData] });
   };
 
-  //상세 prodcut 조회 api
+  //상세 prodcut 조회 api ok
   getTargetproduct = async (req, res) => {
-    const { Authorization } = req.headers;
     const { productId } = req.params;
-
-    //토큰이 없을 경우
-    if (!Authorization) {
-      const detailProductData =
-        await this.productService.findTargetproduct_none(productId);
-      const detailcommentdata = await this.commnetService.findTargetcomment(
-        productId
-      );
-      return res.json({
-        data: { detailProductData, comment: [detailcommentdata] },
-      });
-    }
-
-    let [authType, authToken] = Authorization.split(" ");
-    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
-    const detailProductData = await this.productService.findTargetproduct_none(
-      productId
-    );
+    const product = await this.productService.findTargetproduct(productId);
     const detailcommentdata = await this.commnetService.findTargetcomment(
       productId
     );
-    res.json({ data: { detailProductData, comment: [detailcommentdata] } });
+    return res.json({
+      data: { product, comment: detailcommentdata },
+    });
   };
 
+  //product 게시글 제작 ok
   createProduct = async (req, res) => {
     const { title, category, location, price, content, img } = req.body;
     const { nickname } = res.locals.user;
@@ -89,6 +55,7 @@ class ProductController {
     res.json({ message: "success" });
   };
 
+  //product 게시글 수정 ok
   updateProduct = async (req, res) => {
     const { productId } = req.params;
     const { title, category, location, price, content, img } = req.body;
@@ -106,6 +73,7 @@ class ProductController {
     res.json({ message: "success" });
   };
 
+  //product 게시글 수정 ok
   deleteProduct = async (req, res) => {
     const { productId } = req.params;
 
@@ -114,5 +82,4 @@ class ProductController {
     res.json({ message: "success" });
   };
 }
-
 module.exports = ProductController;
