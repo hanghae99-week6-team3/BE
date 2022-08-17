@@ -8,7 +8,8 @@ class LikeController {
   isLiked = async (req, res) => {
     const { Authorization } = req.headers;
     const { productId } = req.params;
-    const { userId } = jwt.verify(Authorization, process.env.MYSQL_KEY);
+    let [authType, authToken] = Authorization.split(" ");
+    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
     const { like } = req.body;
     const likeCount = await this.likeService.isLiked(productId, userId, like);
 

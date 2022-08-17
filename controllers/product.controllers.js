@@ -12,18 +12,18 @@ class ProductController {
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
     const { Authorization } = req.headers;
-    if(!Authorization){
+    if (!Authorization) {
       const ProductsData = await this.productService.findAllproducts_none();
       return res.json({ data: [ProductsData] });
     }
-    const { userId } = jwt.verify(Authorization, process.env.MYSQL_KEY);
+    let [authType, authToken] = Authorization.split(" ");
+    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
     const ProductsData = await this.productService.findAllproducts(userId);
     res.json({ data: [ProductsData] });
   };
 
   //카테고리별 prodcut 조회 api
   getCategriedProducts = async (req, res) => {
-    
     // const { userId } = res.locals.user;
     const category = req.query;
     const CategriedProductsData =
@@ -33,8 +33,10 @@ class ProductController {
 
   //상세 prodcut 조회 api
   getTargetproduct = async (req, res) => {
+    const { Authorization } = req.headers;
     const { productId } = req.params;
-    // const { userId } = res.locals.user;
+    let [authType, authToken] = Authorization.split(" ");
+    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
     const detailProductData = await this.productService.findTargetproduct(
       productId,
       userId
@@ -48,7 +50,8 @@ class ProductController {
   createProduct = async (req, res) => {
     const { title, category, location, price, content, img } = req.body;
     const { Authorization } = req.headers;
-    const { userId } = jwt.verify(Authorization,  process.env.MYSQL_KEY); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
+    let [authType, authToken] = Authorization.split(" ");
+    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
     const findUser = await User.findByPk(userId);
     const nickname = findUser.nickname;
 
