@@ -4,12 +4,15 @@ const productRouter = require("./routes/product");
 const likeRouter = require("./routes/like");
 const commentRouter = require("./routes/comment")
 
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const app = express();
 
 const port = process.env.Port;
 
+app.use(cookieParser());
+app.use(express.urlencoded());
 app.use(express.json());
 
 app.use("/api", [userRouter, commentRouter]);

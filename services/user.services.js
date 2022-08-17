@@ -17,6 +17,10 @@ class UserService {
 
     findOneUser_userId = async(userId) => {
         const findUser = await this.userRepository.findOneUser_userId(userId);
+        
+        if(!findUser){
+            return;
+        }
 
         return{
             nickname: findUser.nickname
@@ -25,6 +29,10 @@ class UserService {
 
     findOneUser_nickname = async(nickname) => {
         const findUser = await this.userRepository.findOneUser_nickname(nickname);
+        
+        if(!findUser){
+            return;
+        }
 
         return{
             nickname: findUser.nickname
@@ -35,6 +43,7 @@ class UserService {
         const UserData = await this.userRepository.login(userId, password);
         return{
             userId: UserData.userId,
+            nickname: UserData.nickname, 
             password: UserData.password,
         };
     };

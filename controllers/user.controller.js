@@ -1,6 +1,7 @@
 const UserService = require("../services/user.services");
 const jwt = require("jsonwebtoken");
 const res = require("express/lib/response");
+const req = require("express/lib/request");
 require("dotenv").config();
 
 class UsersController {
@@ -9,25 +10,24 @@ class UsersController {
     createUser = async(req,res,next) => {
         const {userId, nickname, password} = req.body;
 
-        await this.userService.createUser({userId, nickname, password});
+        await this.userService.createUser(userId, nickname, password);
         res.status(200).json({
             success: true
         });
     };
 
-    Login = async() => {
+    Login = async(req,res,next) => {
         const {userId, password} = req.body;
         const user = await this.userService.Login(userId, password);
 
         if(!user){
             res.status(400).json({
-                success: false, 
-                errorMessage: "ID or Password is worng",
+                success: false,
             });
             return;
         };
 
-        let payload = {userId: user.userId, nickname: nickname};
+        let payload = {userId: user.userId, nickname: user.nickname};
         const token = jwt.sign(payload, process.env.MYSQL_KEY);
         res.cookie("token", token);
 
@@ -36,19 +36,19 @@ class UsersController {
         });
     };
 
-    DoubleCheck = async() => {
+    DoubleCheck = async(req,res,next) => {
         const {key, value} = req.body;
-        let user = "";
+        let user;
         if(key == "userId"){
-            user = await this.userService.findOneUser_userId({value});
+            user = await this.userService.findOneUser_userId(value);
         }
         if(key == "nickname"){
-            user = await this.userService.findOneUser_nickname({value});
+            user = await this.userService.findOneUser_nickname(value);
         }
         if(!user){
-            return res.status(400).json({ok: false});
+            return res.status(200).json({ok: true});
         }
-       return res.status(200).json({ok: true});
+       return res.status(200).json({ok: false});
     }
 };
 module.exports = UsersController;
