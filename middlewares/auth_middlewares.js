@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
 module.exports = (req, res, next) => {
-  const tokenValue = req.cookies.token;
+  const tokenValue = req.headers;
   if (!tokenValue) {
     res
       .status(401)

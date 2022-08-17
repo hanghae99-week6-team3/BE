@@ -1,4 +1,5 @@
 const express = require("express");
+const authMiddleware = require("../middlewares/auth-middleware");
 const router = express.Router();
 const {
   getAllComment,
@@ -9,9 +10,9 @@ const {
 
 router
   .route("/product/comment/:productId")
-  .post(postComment)
+  .post(authMiddleware, postComment)
   .get(getAllComment);
 
-router.route("/comment/:commentId").put(updateComment).delete(deletComment);
+router.route("/comment/:commentId").put(authMiddleware, updateComment).delete(authMiddleware, deletComment);
 
 module.exports = router;
