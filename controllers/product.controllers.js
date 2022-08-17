@@ -3,9 +3,7 @@ const CommnetService = require("../services/comment.services");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const jwt = require("jsonwebtoken");
 const { User } = require("../models");
-const cookies = require("cookie-parser");
 
 class ProductController {
   productService = new ProductService();
@@ -13,16 +11,18 @@ class ProductController {
 
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
-    if(!req.cookies.token){
+    const { Authorization } = req.headers;
+    if(!Authorization){
       return res.status(400).json({message: "토큰 없음"});
     }
-    const { userId } = jwt.verify(req.cookies.token, process.env.MYSQL_KEY);
+    const { userId } = jwt.verify(Authorization, process.env.MYSQL_KEY);
     const ProductsData = await this.productService.findAllproducts(userId);
     res.json({ data: [ProductsData] });
   };
 
   //카테고리별 prodcut 조회 api
   getCategriedProducts = async (req, res) => {
+    
     // const { userId } = res.locals.user;
     const category = req.query;
     const CategriedProductsData =
@@ -46,9 +46,8 @@ class ProductController {
 
   createProduct = async (req, res) => {
     const { title, category, location, price, content, img } = req.body;
-    const token = req.cookies.token;
-    console.log("!!!@@@", token);
-    const { userId } = jwt.verify(token, "my-secret-key"); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
+    const { Authorization } = req.headers;
+    const { userId } = jwt.verify(Authorization,  process.env.MYSQL_KEY); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
     const findUser = await User.findByPk(userId);
     const nickname = findUser.nickname;
 

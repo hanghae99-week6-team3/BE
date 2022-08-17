@@ -28,11 +28,10 @@ class UsersController {
         };
 
         let payload = {userId: user.userId, nickname: user.nickname};
-        const token = jwt.sign(payload, process.env.MYSQL_KEY);
-        res.cookie("token", token);
+        const token = jwt.sign(payload, process.env.MYSQL_KEY, { expiresIn: "7d" });
 
         res.json({
-            token: token,
+            token,
         });
     };
 
