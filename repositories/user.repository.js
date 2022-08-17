@@ -7,12 +7,12 @@ class UserRepository {
     };
 
     findOneUser_userId = async(userId) => {
-        const users = await User.findOne({where: userId});
+        const users = await User.findOne({where: {userId}});
         return users;
     };
 
     findOneUser_nickname = async(nickname) => {
-        const users = await User.findOne({where: nickname});
+        const users = await User.findOne({where: {nickname}});
         return users;
     };
 
