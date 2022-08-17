@@ -13,7 +13,8 @@ class ProductController {
   getAllProducts = async (req, res) => {
     const { Authorization } = req.headers;
     if(!Authorization){
-      return res.status(400).json({message: "토큰 없음"});
+      const ProductsData = await this.productService.findAllproducts_none();
+      return res.json({ data: [ProductsData] });
     }
     const { userId } = jwt.verify(Authorization, process.env.MYSQL_KEY);
     const ProductsData = await this.productService.findAllproducts(userId);

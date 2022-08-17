@@ -14,7 +14,7 @@ class ProductService {
     const productIdata = JSON.parse(await this.likeRepository.findProductId());
 
     for(let i = 0; i < productIdata.length; i++){
-      let userIdCopy = productIdata[i].userId.find(userId);;
+      let userIdCopy = JSON(productIdata[i].userId).find(userId);;
       if(!userIdCopy){
         likeChack = false;
       }else{
@@ -32,6 +32,32 @@ class ProductService {
       // } else {
       //    liked = true;
       // };
+      return {
+        product: {
+          productId: product.productId,
+          title: product.title,
+          category: product.category,
+          location: product.location,
+          price: product.price,
+          img: product.img,
+          content: product.content,
+          commentCount: product.commentCount,
+          createdAt: product.createdAt,
+        },
+        like: {
+          like: likeChack,
+          likeCount: product.Likes.likeCount,
+        },
+      };
+    });
+  };
+
+  //비회원 전체 조회 api
+  findAllproducts_none = async () => {
+    let likeChack = false;
+    const allProducts = await this.productRepository.findAllproducts();
+
+    return allProducts.map((product) => {
       return {
         product: {
           productId: product.productId,
