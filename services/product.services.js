@@ -11,27 +11,18 @@ class ProductService {
   findAllproducts = async (userId) => {
     let likeChack;
     const allProducts = await this.productRepository.findAllproducts();
-    const productIdata = JSON.parse(await this.likeRepository.findProductId());
+    const productIdata = JSON.parse(await this.likeRepository.findProductId(userId));
 
     for(let i = 0; i < productIdata.length; i++){
-      let userIdCopy = JSON(productIdata[i].userId).find(userId);;
+      const userIdCopy = JSON(productIdata[i].userId).find(userId);;
       if(!userIdCopy){
         likeChack = false;
       }else{
         likeChack = true;
       }
     };
-    // const likedProduct = await this.productRepository.findlikedProducts(userId)
 
     return allProducts.map((product) => {
-      // const likeCount = await this.likeRepository.findLikeCount(product.productId);
-      // const commentCount = await this.commentRepository.commentCount(product.productId);
-      // const checklikedProducts = await likedProduct.findOne({ where: { productId:product.productId } });
-      // if (!checklikedProducts.length) {
-      //    liked = false;
-      // } else {
-      //    liked = true;
-      // };
       return {
         product: {
           productId: product.productId,
@@ -80,20 +71,20 @@ class ProductService {
   
   //카테고리 prodcut api
   findCategoryrproducts = async (category, userId) => {
-    const categoryProducts = await this.productRepository.findCategoryrproducts(
-      category
-    );
-    const productIdata = await this.likeRepository.findProductId(userId);
+    let likeChack;
+    const categoryProducts = await this.productRepository.findCategoryrproducts(category);
+    const productIdata = JSON.parse(await this.likeRepository.findProductId());
+
+    for(let i = 0; i < productIdata.length; i++){
+      const userIdCopy = JSON(productIdata[i].userId).find(userId);;
+      if(!userIdCopy){
+        likeChack = false;
+      }else{
+        likeChack = true;
+      }
+    };
 
     return categoryProducts.map((product) => {
-      // const likeCount = await this.likeRepository.findLikeCount(product.productId);
-      // const commentCount = await this.commentRepository.commentCount(product.productId);
-      // const checklikedProducts = await likedProduct.findOne({ where: { productId:product.productId } });
-      // if (!checklikedProducts.length) {
-      //    liked = false;
-      // } else {
-      //    liked = true;
-      // };
       return {
         product: {
           productId: product.productId,
@@ -107,7 +98,33 @@ class ProductService {
           createdAt: product.createdAt,
         },
         like: {
-          like: productIdata.includes(product.productId),
+          like: likeChack,
+          likeCount: product.Likes.likeCount,
+        },
+      };
+    });
+  };
+
+  //비회원 카테고리 prodcut api
+  findCategoryrproducts_none = async (category) => {
+    let likeChack = false;
+    const categoryProducts = await this.productRepository.findCategoryrproducts(category);
+
+    return categoryProducts.map((product) => {
+      return {
+        product: {
+          productId: product.productId,
+          title: product.title,
+          category: product.category,
+          location: product.location,
+          price: product.price,
+          img: product.img,
+          content: product.content,
+          commentCount: product.commentCount,
+          createdAt: product.createdAt,
+        },
+        like: {
+          like: likeChack,
           likeCount: product.Likes.likeCount,
         },
       };
@@ -116,20 +133,20 @@ class ProductService {
 
   //상세 prodcut api
   findTargetproduct = async (productId, userId) => {
-    const targetProducts = await this.productRepository.targetProduct(
-      productId
-    );
-    const productIdata = await this.likeRepository.findProductId();
+    let likeChack;
+    const targetProducts = await this.productRepository.targetProduct(productId);
+    const productIdata = JSON.parse(await this.likeRepository.findProductId());
+
+    for(let i = 0; i < productIdata.length; i++){
+      const userIdCopy = JSON(productIdata[i].userId).find(userId);;
+      if(!userIdCopy){
+        likeChack = false;
+      }else{
+        likeChack = true;
+      }
+    };
 
     return targetProducts.map((product) => {
-      // const likeCount = await this.likeRepository.findLikeCount(product.productId);
-      // const commentsData = await this.commentRepository.comments(product.productId);
-      // const checklikedProducts = await likedProduct.findOne({ where: { productId:product.productId } });
-      // if (!checklikedProducts.length) {
-      //    liked = false;
-      // } else {
-      //    liked = true;
-      // };
       return {
         product: {
           productId: product.productId,
@@ -144,7 +161,34 @@ class ProductService {
           nickname: product.nickname,
         },
         like: {
-          like: productIdata.includes(product.productId),
+          like: likeChack,
+          likeCount: product.Likes.likeCount,
+        },
+      };
+    });
+  };
+
+  //비회원 상세 prodcut api
+  findTargetproduct = async (productId) => {
+    let likeChack = false;
+    const targetProducts = await this.productRepository.targetProduct(productId);
+
+    return targetProducts.map((product) => {
+      return {
+        product: {
+          productId: product.productId,
+          title: product.title,
+          category: product.category,
+          location: product.location,
+          price: product.price,
+          img: product.img,
+          content: product.content,
+          content: product.content,
+          createdAt: product.createdAt,
+          nickname: product.nickname,
+        },
+        like: {
+          like: likeChack,
           likeCount: product.Likes.likeCount,
         },
       };

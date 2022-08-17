@@ -12,7 +12,9 @@ class ProductController {
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
     const { Authorization } = req.headers;
-    if (!Authorization) {
+    
+    //토큰이 없을 경우
+    if(!Authorization){
       const ProductsData = await this.productService.findAllproducts_none();
       return res.json({ data: [ProductsData] });
     }
@@ -24,10 +26,19 @@ class ProductController {
 
   //카테고리별 prodcut 조회 api
   getCategriedProducts = async (req, res) => {
-    // const { userId } = res.locals.user;
+    const { Authorization } = req.headers;
     const category = req.query;
-    const CategriedProductsData =
-      await this.productService.findCategoryrproducts(category, userId);
+    
+    //토큰이 없을 경우
+    if(!Authorization){
+      const category = req.query;
+      const CategriedProductsData = await this.productService.findCategoryrproducts_none(category);
+      return res.json({ data: [CategriedProductsData] });
+    }
+
+    let [authType, authToken] = Authorization.split(" ");
+    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
+    const CategriedProductsData = await this.productService.findCategoryrproducts(category, userId);
     res.json({ data: [CategriedProductsData] });
   };
 
@@ -35,25 +46,24 @@ class ProductController {
   getTargetproduct = async (req, res) => {
     const { Authorization } = req.headers;
     const { productId } = req.params;
+    
+    //토큰이 없을 경우
+    if(!Authorization){
+      const detailProductData = await this.productService.findTargetproduct_none(productId);
+      const detailcommentdata = await this.commnetService.findTargetcomment(productId);
+      return res.json({ data: { detailProductData, comment: [detailcommentdata] } });
+    }
+
     let [authType, authToken] = Authorization.split(" ");
     const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
-    const detailProductData = await this.productService.findTargetproduct(
-      productId,
-      userId
-    );
-    const detailcommentdata = await this.commnetService.findTargetcomment(
-      productId
-    );
+    const detailProductData = await this.productService.findTargetproduct(productId, userId);
+    const detailcommentdata = await this.commnetService.findTargetcomment(productId);
     res.json({ data: { detailProductData, comment: [detailcommentdata] } });
   };
 
   createProduct = async (req, res) => {
     const { title, category, location, price, content, img } = req.body;
-    const { Authorization } = req.headers;
-    let [authType, authToken] = Authorization.split(" ");
-    const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
-    const findUser = await User.findByPk(userId);
-    const nickname = findUser.nickname;
+    const { nickname } = res.locals.user;
 
     await this.productService.createProduct(
       nickname,
