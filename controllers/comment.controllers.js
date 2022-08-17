@@ -55,10 +55,10 @@ const updateComment = async (req, res) => {
 
 //댓글 삭제 API
 const deletComment = async (req, res) => {
-  const { commnetId } = req.params;
+  const { commentId } = req.params;
 
   await Comment.destroy({
-    where: { commnetId: commnetId },
+    where: { commentId: commentId },
   });
   res.status(200).json({ message: "success" });
 };

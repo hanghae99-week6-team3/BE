@@ -26,6 +26,9 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER,
       },
+      img: {
+        type: Sequelize.STRING,
+      },
       commentCount: {
         type: Sequelize.INTEGER,
       },

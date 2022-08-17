@@ -1,5 +1,5 @@
 const { Product, Comment } = require("../models");
-const { Like } = require("../models");
+// const { Like } = require("../models");
 
 class ProductRepository {
   // =====================================================================
@@ -14,14 +14,13 @@ class ProductRepository {
     const allproductsData = await Product.findAll({
       include: [
         {
-          model: Like,
+          model: Comment,
           // attributes : attributes,
         },
       ],
     });
     return allproductsData;
   };
-
   // =====================================================================
   // //userId기준 좋아하는 product데이터 res
   // findlikedProducts = async (userId) => {
@@ -43,7 +42,7 @@ class ProductRepository {
       where: { category: category },
       include: [
         {
-          model: Like,
+          model: Comment,
           // attributes : attributes,
         },
       ],
@@ -66,7 +65,7 @@ class ProductRepository {
       where: { productId: productId },
       include: [
         {
-          model: Like,
+          model: Comment,
           // attributes : attributes,
         },
       ],

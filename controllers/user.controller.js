@@ -1,7 +1,7 @@
 const UserService = require("../services/user.services");
 const jwt = require("jsonwebtoken");
-const res = require("express/lib/response");
-const req = require("express/lib/request");
+// const res = require("express/lib/response");
+// const req = require("express/lib/request");
 require("dotenv").config();
 
 class UsersController {

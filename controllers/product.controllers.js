@@ -3,7 +3,7 @@ const CommnetService = require("../services/comment.services");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const { User } = require("../models");
+// const { User } = require("../models");
 
 class ProductController {
   productService = new ProductService();
@@ -12,15 +12,15 @@ class ProductController {
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
     const { Authorization } = req.headers;
-    
+
     //토큰이 없을 경우
-    if(!Authorization){
+    if (!Authorization) {
       const ProductsData = await this.productService.findAllproducts_none();
       return res.json({ data: [ProductsData] });
     }
-    let [authType, authToken] = Authorization.split(" ");
+    let [authType, authToken] = Authorization.split("");
     const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
-    const ProductsData = await this.productService.findAllproducts(userId);
+    const ProductsData = await this.productService.findAllproducts_none();
     res.json({ data: [ProductsData] });
   };
 
@@ -28,17 +28,19 @@ class ProductController {
   getCategriedProducts = async (req, res) => {
     const { Authorization } = req.headers;
     const category = req.query;
-    
+
     //토큰이 없을 경우
-    if(!Authorization){
+    if (!Authorization) {
       const category = req.query;
-      const CategriedProductsData = await this.productService.findCategoryrproducts_none(category);
+      const CategriedProductsData =
+        await this.productService.findCategoryrproducts_none(category);
       return res.json({ data: [CategriedProductsData] });
     }
 
     let [authType, authToken] = Authorization.split(" ");
     const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
-    const CategriedProductsData = await this.productService.findCategoryrproducts(category, userId);
+    const CategriedProductsData =
+      await this.productService.findCategoryrproducts_none(category);
     res.json({ data: [CategriedProductsData] });
   };
 
@@ -46,18 +48,27 @@ class ProductController {
   getTargetproduct = async (req, res) => {
     const { Authorization } = req.headers;
     const { productId } = req.params;
-    
+
     //토큰이 없을 경우
-    if(!Authorization){
-      const detailProductData = await this.productService.findTargetproduct_none(productId);
-      const detailcommentdata = await this.commnetService.findTargetcomment(productId);
-      return res.json({ data: { detailProductData, comment: [detailcommentdata] } });
+    if (!Authorization) {
+      const detailProductData =
+        await this.productService.findTargetproduct_none(productId);
+      const detailcommentdata = await this.commnetService.findTargetcomment(
+        productId
+      );
+      return res.json({
+        data: { detailProductData, comment: [detailcommentdata] },
+      });
     }
 
     let [authType, authToken] = Authorization.split(" ");
     const { userId } = jwt.verify(authToken, process.env.MYSQL_KEY);
-    const detailProductData = await this.productService.findTargetproduct(productId, userId);
-    const detailcommentdata = await this.commnetService.findTargetcomment(productId);
+    const detailProductData = await this.productService.findTargetproduct_none(
+      productId
+    );
+    const detailcommentdata = await this.commnetService.findTargetcomment(
+      productId
+    );
     res.json({ data: { detailProductData, comment: [detailcommentdata] } });
   };
 
