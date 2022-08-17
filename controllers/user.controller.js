@@ -46,9 +46,9 @@ class UsersController {
             user = await this.userService.findOneUser_nickname(value);
         }
         if(!user){
-            return res.status(200).json({ok: false});
+            return res.status(200).json({ok: true});
         }
-       return res.status(200).json({ok: true});
+       return res.status(200).json({ok: false});
     }
 };
 module.exports = UsersController;
