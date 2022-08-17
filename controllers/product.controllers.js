@@ -1,20 +1,24 @@
 const ProductService = require("../services/product.services");
 const CommnetService = require("../services/comment.services");
 
+const jwt = require("jsonwebtoken");
+const { User } = require("../models");
+const cookies = require("cookie-parser");
+
 class ProductController {
   productService = new ProductService();
   commnetService = new CommnetService();
 
   // prodcut 전체 조회 api
   getAllProducts = async (req, res) => {
-    const { userId } = res.locals.user;
+    // const { userId } = res.locals.user;
     const ProductsData = await this.productService.findAllproducts(userId);
     res.json({ data: [ProductsData] });
   };
 
   //카테고리별 prodcut 조회 api
   getCategriedProducts = async (req, res) => {
-    const { userId } = res.locals.user;
+    // const { userId } = res.locals.user;
     const category = req.query;
     const CategriedProductsData =
       await this.productService.findCategoryrproducts(category, userId);
@@ -24,17 +28,24 @@ class ProductController {
   //상세 prodcut 조회 api
   getTargetproduct = async (req, res) => {
     const { productId } = req.params;
-    const { userId } = res.locals.user;
+    // const { userId } = res.locals.user;
     const detailProductData = await this.productService.findTargetproduct(
-      productId, userId
+      productId,
+      userId
     );
-    const detailcommentdata = await this.commnetService.findTargetcomment(productId)
-    res.json({ data:{detailProductData, comment:[detailcommentdata] }  });
+    const detailcommentdata = await this.commnetService.findTargetcomment(
+      productId
+    );
+    res.json({ data: { detailProductData, comment: [detailcommentdata] } });
   };
 
   createProduct = async (req, res) => {
-    const { title, category, location, price, content } = req.body;
-    const { nickname } = res.locals.user;
+    const { title, category, location, price, content, img } = req.body;
+    const token = req.cookies;
+    console.log("!!!@@@", token);
+    const { userId } = jwt.verify(token, "my-secret-key"); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
+    const findUser = await User.findByPk(userId);
+    const nickname = findUser.nickname;
 
     await this.productService.createProduct(
       nickname,
@@ -42,7 +53,8 @@ class ProductController {
       category,
       location,
       price,
-      content
+      content,
+      img
     );
 
     res.json({ message: "success" });
@@ -50,7 +62,7 @@ class ProductController {
 
   updateProduct = async (req, res) => {
     const { productId } = req.params;
-    const { title, category, location, price, content } = req.body;
+    const { title, category, location, price, content, img } = req.body;
 
     await this.productService.updateProduct(
       productId,
@@ -58,7 +70,8 @@ class ProductController {
       category,
       location,
       price,
-      content
+      content,
+      img
     );
 
     res.json({ message: "success" });
