@@ -1,7 +1,7 @@
 const express = require("express");
 const userRouter = require("./routes/users");
 const productRouter = require("./routes/product");
-const likeRouter = require("./routes/like");
+// const likeRouter = require("./routes/like");
 const commentRouter = require("./routes/comment");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/api", [userRouter, commentRouter]);
-app.use("/api/product", [likeRouter, productRouter]);
+app.use("/api/product", [ productRouter]);
 
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");

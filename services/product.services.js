@@ -1,26 +1,26 @@
 const ProductRepository = require("../repositories/product.repositories");
-const LikeRepository = require("../repositories/like.repositories");
+// const LikeRepository = require("../repositories/like.repositories");
 const CommentRepository = require("../repositories/comment.repositories");
 
 class ProductService {
   productRepository = new ProductRepository();
-  likeRepository = new LikeRepository();
+  // likeRepository = new LikeRepository();
   commentRepository = new CommentRepository();
 
   // prodcut 전체 조회  api
   findAllproducts = async (userId) => {
-    let likeChack;
+    // let likeChack;
     const allProducts = await this.productRepository.findAllproducts();
-    const productIdata = JSON.parse(await this.likeRepository.findProductId(userId));
+    // const productIdata = JSON.parse(await this.likeRepository.findProductId(userId));
 
-    for(let i = 0; i < productIdata.length; i++){
-      const userIdCopy = JSON(productIdata[i].userId).find(userId);;
-      if(!userIdCopy){
-        likeChack = false;
-      }else{
-        likeChack = true;
-      }
-    };
+    // for(let i = 0; i < productIdata.length; i++){
+    //   const userIdCopy = JSON(productIdata[i].userId).find(userId);;
+    //   if(!userIdCopy){
+    //     likeChack = false;
+    //   }else{
+    //     likeChack = true;
+    //   }
+    // };
 
     return allProducts.map((product) => {
       return {
@@ -35,17 +35,17 @@ class ProductService {
           commentCount: product.commentCount,
           createdAt: product.createdAt,
         },
-        like: {
-          like: likeChack,
-          likeCount: product.Likes.likeCount,
-        },
+        // like: {
+        //   like: likeChack,
+        //   likeCount: product.Likes.likeCount,
+        // },
       };
     });
   };
 
   //비회원 전체 조회 api
   findAllproducts_none = async () => {
-    let likeChack = false;
+    // let likeChack = false;
     const allProducts = await this.productRepository.findAllproducts();
 
     return allProducts.map((product) => {
@@ -61,28 +61,28 @@ class ProductService {
           commentCount: product.commentCount,
           createdAt: product.createdAt,
         },
-        like: {
-          like: likeChack,
-          likeCount: product.Likes.likeCount,
-        },
+        // like: {
+        //   like: likeChack,
+        //   likeCount: product.Likes.likeCount,
+        // },
       };
     });
   };
   
   //카테고리 prodcut api
   findCategoryrproducts = async (category, userId) => {
-    let likeChack;
+    // let likeChack;
     const categoryProducts = await this.productRepository.findCategoryrproducts(category);
-    const productIdata = JSON.parse(await this.likeRepository.findProductId());
+    // const productIdata = JSON.parse(await this.likeRepository.findProductId());
 
-    for(let i = 0; i < productIdata.length; i++){
-      const userIdCopy = JSON(productIdata[i].userId).find(userId);;
-      if(!userIdCopy){
-        likeChack = false;
-      }else{
-        likeChack = true;
-      }
-    };
+    // for(let i = 0; i < productIdata.length; i++){
+    //   const userIdCopy = JSON(productIdata[i].userId).find(userId);;
+    //   if(!userIdCopy){
+    //     likeChack = false;
+    //   }else{
+    //     likeChack = true;
+    //   }
+    // };
 
     return categoryProducts.map((product) => {
       return {
@@ -97,17 +97,17 @@ class ProductService {
           commentCount: product.commentCount,
           createdAt: product.createdAt,
         },
-        like: {
-          like: likeChack,
-          likeCount: product.Likes.likeCount,
-        },
+        // like: {
+        //   like: likeChack,
+        //   likeCount: product.Likes.likeCount,
+        // },
       };
     });
   };
 
   //비회원 카테고리 prodcut api
   findCategoryrproducts_none = async (category) => {
-    let likeChack = false;
+    // let likeChack = false;
     const categoryProducts = await this.productRepository.findCategoryrproducts(category);
 
     return categoryProducts.map((product) => {
@@ -123,28 +123,28 @@ class ProductService {
           commentCount: product.commentCount,
           createdAt: product.createdAt,
         },
-        like: {
-          like: likeChack,
-          likeCount: product.Likes.likeCount,
-        },
+        // like: {
+        //   like: likeChack,
+        //   likeCount: product.Likes.likeCount,
+        // },
       };
     });
   };
 
   //상세 prodcut api
   findTargetproduct = async (productId, userId) => {
-    let likeChack;
+    // let likeChack;
     const targetProducts = await this.productRepository.targetProduct(productId);
-    const productIdata = JSON.parse(await this.likeRepository.findProductId());
+    // const productIdata = JSON.parse(await this.likeRepository.findProductId());
 
-    for(let i = 0; i < productIdata.length; i++){
-      const userIdCopy = JSON(productIdata[i].userId).find(userId);;
-      if(!userIdCopy){
-        likeChack = false;
-      }else{
-        likeChack = true;
-      }
-    };
+    // for(let i = 0; i < productIdata.length; i++){
+    //   const userIdCopy = JSON(productIdata[i].userId).find(userId);;
+    //   if(!userIdCopy){
+    //     likeChack = false;
+    //   }else{
+    //     likeChack = true;
+    //   }
+    // };
 
     return targetProducts.map((product) => {
       return {
@@ -160,17 +160,17 @@ class ProductService {
           createdAt: product.createdAt,
           nickname: product.nickname,
         },
-        like: {
-          like: likeChack,
-          likeCount: product.Likes.likeCount,
-        },
+        // like: {
+        //   like: likeChack,
+        //   likeCount: product.Likes.likeCount,
+        // },
       };
     });
   };
 
   //비회원 상세 prodcut api
   findTargetproduct = async (productId) => {
-    let likeChack = false;
+    // let likeChack = false;
     const targetProducts = await this.productRepository.targetProduct(productId);
 
     return targetProducts.map((product) => {
@@ -187,10 +187,10 @@ class ProductService {
           createdAt: product.createdAt,
           nickname: product.nickname,
         },
-        like: {
-          like: likeChack,
-          likeCount: product.Likes.likeCount,
-        },
+        // like: {
+        //   like: likeChack,
+        //   likeCount: product.Likes.likeCount,
+        // },
       };
     });
   };
