@@ -12,16 +12,15 @@ class ProductRepository {
   //전체 products 데이터 res
   findAllproducts = async () => {
     const allproductsData = await Product.findAll({
-      // include: [
-      //   // {
-      //   //   model: Like,
-      //   //   // attributes : attributes,
-      //   // },
-      // ],
+      include: [
+        {
+          model: Comment,
+          // attributes : attributes,
+        },
+      ],
     });
     return allproductsData;
   };
-
   // =====================================================================
   // //userId기준 좋아하는 product데이터 res
   // findlikedProducts = async (userId) => {
@@ -41,12 +40,12 @@ class ProductRepository {
   findCategoryrproducts = async () => {
     const CaterproductsData = await Product.findAll({
       where: { category: category },
-      // include: [
-      //   {
-      //     model: Like,
-      //     // attributes : attributes,
-      //   },
-      // ],
+      include: [
+        {
+          model: Comment,
+          // attributes : attributes,
+        },
+      ],
     });
     return CaterproductsData;
   };
@@ -64,12 +63,12 @@ class ProductRepository {
   targetProduct = async (productId) => {
     const targetProductData = await Product.findOne({
       where: { productId: productId },
-      // include: [
-      //   {
-      //     model: Like,
-      //     // attributes : attributes,
-      //   },
-      // ],
+      include: [
+        {
+          model: Comment,
+          // attributes : attributes,
+        },
+      ],
     });
 
     return targetProductData;

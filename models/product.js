@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       content: DataTypes.TEXT,
       location: DataTypes.STRING,
+      img: DataTypes.STRING,
       price: DataTypes.INTEGER,
       commentCount: DataTypes.INTEGER,
     },
@@ -41,3 +42,4 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Product;
 };
+

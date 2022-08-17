@@ -8,7 +8,7 @@ class ProductService {
   commentRepository = new CommentRepository();
 
   // prodcut 전체 조회  api
-  findAllproducts = async (userId) => {
+  findAllproducts = async () => {
     // let likeChack;
     const allProducts = await this.productRepository.findAllproducts();
     // const productIdata = JSON.parse(await this.likeRepository.findProductId(userId));
@@ -32,7 +32,7 @@ class ProductService {
           price: product.price,
           img: product.img,
           content: product.content,
-          commentCount: product.commentCount,
+          commentCount: product.Comments.length,
           createdAt: product.createdAt,
         },
         // like: {
@@ -58,7 +58,7 @@ class ProductService {
           price: product.price,
           img: product.img,
           content: product.content,
-          commentCount: product.commentCount,
+          commentCount: product.Comments.length,
           createdAt: product.createdAt,
         },
         // like: {
@@ -94,7 +94,7 @@ class ProductService {
           price: product.price,
           img: product.img,
           content: product.content,
-          commentCount: product.commentCount,
+          commentCount: product.Comments.length,
           createdAt: product.createdAt,
         },
         // like: {
@@ -120,7 +120,7 @@ class ProductService {
           price: product.price,
           img: product.img,
           content: product.content,
-          commentCount: product.commentCount,
+          commentCount: product.Comments.length,
           createdAt: product.createdAt,
         },
         // like: {
