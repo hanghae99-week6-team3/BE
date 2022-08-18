@@ -17,6 +17,12 @@
 - 백엔드 : [바로가기](https://github.com/hanghae99-week6-team3/BE)
 
 <aside>
+💡 프로젝트 소개
+</aside>
+
+- 노션 : [바로가기](https://speckle-fold-197.notion.site/H99-W6-bdf5475fb95e4593be1b8d12e07af4c5)
+
+<aside>
 💡 와이어프레임
 
 </aside>
