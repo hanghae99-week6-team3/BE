@@ -27,7 +27,7 @@
 
 </aside>
 
-[API 명세 바로가기](https://www.notion.so/70b8b083094f47859660a76eaf1b047a)
+[API 명세 바로가기](https://speckle-fold-197.notion.site/70b8b083094f47859660a76eaf1b047a?v=77e6025136d24501bf6848a0a0443b0a)
 
 <aside>
 💡 DB ERD
